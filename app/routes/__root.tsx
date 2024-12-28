@@ -1,3 +1,4 @@
+import globalStyle from '../globals.css?url'
 import { Outlet, ScrollRestoration, createRootRoute } from '@tanstack/react-router';
 import { Meta, Scripts } from '@tanstack/start';
 import { type ReactNode } from 'react';
@@ -21,6 +22,10 @@ export const Route = createRootRoute({
           title: 'TanStack Start Starter',
         },
       ],
+      links: [{
+        rel: 'stylesheet',
+        href: globalStyle,
+      },]
     };
   },
   loader: async () => {
