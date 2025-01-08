@@ -2,7 +2,7 @@ import React from 'react';
 import Skeleton from './ui/Skeleton';
 import { Await } from '@tanstack/react-router';
 import { getProjectFn } from '@/data/functions/project';
-import { Route } from '@/routes/__root';
+import { useServerFn } from '@tanstack/start';
 
 function Chip({ children }: { children: React.ReactNode }) {
   return (
@@ -20,10 +20,9 @@ function Info({ label, value }: { label: string; value: string }) {
 }
 
 export default function ProjectInfo() {
-  // const { project } = Route.useLoaderData();
-  const project = getProjectFn();
+  const project = useServerFn(getProjectFn);
 
-  return (<Await promise={project} fallback={<ProjectInfoSkeleton />}>
+  return (<Await promise={project()} fallback={<ProjectInfoSkeleton />}>
     {project => (<div className="flex gap-16">
       <div className="flex flex-col gap-2">
         <span className="font-bold">About the project</span>

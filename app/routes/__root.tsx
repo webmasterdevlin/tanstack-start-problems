@@ -1,12 +1,17 @@
 import globalStyle from '../globals.css?url'
-import { Outlet, ScrollRestoration, createRootRoute } from '@tanstack/react-router';
+import { Outlet, ScrollRestoration, createRootRouteWithContext } from '@tanstack/react-router';
 import { Meta, Scripts } from '@tanstack/start';
 import { type ReactNode } from 'react';
 import LoadTime from '@/components/LoadTime';
 import ProjectInfo from '@/components/ProjectInfo';
 import { getProjectFn } from '@/data/functions/project';
+import { QueryClient } from '@tanstack/react-query';
 
-export const Route = createRootRoute({
+interface MyRouterContext {
+  queryClient: QueryClient
+}
+
+export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: RootComponent,
   head: () => {
     return {
@@ -28,11 +33,6 @@ export const Route = createRootRoute({
       },]
     };
   },
-  loader: async () => {
-    return {
-      project: getProjectFn(),
-    };
-  }
 });
 
 function RootComponent() {
