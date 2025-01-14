@@ -25,7 +25,7 @@ export default function ToggleGroup({ options, selectedValues, toggleKey, onTogg
         const isActive = selectedValues.includes(option.value.toString());
         return (
           <Link
-            to={`?${toggleKey}=${isActive ? '' : option.value}`}
+            to={`..`}
             key={option.value}
             className={cn(isActive ? activeClass : inactiveClass, 'w-fit rounded border border-primary px-4 py-2')}
             onClick={e => {

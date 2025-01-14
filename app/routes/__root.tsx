@@ -1,11 +1,12 @@
 import globalStyle from '../globals.css?url'
 import { Outlet, ScrollRestoration, createRootRouteWithContext } from '@tanstack/react-router';
 import { Meta, Scripts } from '@tanstack/start';
-import { type ReactNode } from 'react';
+import { Suspense, type ReactNode } from 'react';
 import LoadTime from '@/components/LoadTime';
-import ProjectInfo from '@/components/ProjectInfo';
-import { getProjectFn } from '@/data/functions/project';
+import ProjectInfo, { ProjectInfoSkeleton } from '@/components/ProjectInfo';
 import { QueryClient } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -43,7 +44,9 @@ function RootComponent() {
         <div className="group flex flex-col gap-10">
           <div className="flex flex-col gap-6">
             <h1>Project information</h1>
-            <ProjectInfo />
+            <Suspense fallback={<ProjectInfoSkeleton />}>
+              <ProjectInfo />
+            </Suspense>
           </div>
           <div className="h-[1px] bg-primary" />
           <Outlet />
@@ -52,6 +55,8 @@ function RootComponent() {
         <ScrollRestoration />
         <Scripts />
       </div>
+      <ReactQueryDevtools buttonPosition="bottom-left" initialIsOpen={false} />
+      <TanStackRouterDevtools position="bottom-right" />
     </RootDocument>
   );
 }
