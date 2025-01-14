@@ -4,7 +4,14 @@ import { routerWithQueryClient } from '@tanstack/react-router-with-query'
 import { QueryClient } from '@tanstack/react-query'
 
 export function createRouter() {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        // gcTime means garbage collection time and it is set to 24 hours
+        gcTime: 1000 * 60 * 60 * 24,
+      },
+    },
+  })
 
   return routerWithQueryClient(
     createTanStackRouter({
